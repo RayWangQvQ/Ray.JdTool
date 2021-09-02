@@ -21,10 +21,10 @@ namespace Ray.JdTool
         {
             _fileProvider = fileProvider;
             _fileInfo = _fileProvider.GetFileInfo("/cookie.sh");
-            _configStr = GetConfigFileContent();
+            _configStr = GetConfigFileContent().Result;
         }
 
-        public string GetConfigFileContent()
+        public async Task<string> GetConfigFileContent()
         {
             byte[] buffer;
             using (var stream = _fileInfo.CreateReadStream())
@@ -36,7 +36,7 @@ namespace Ray.JdTool
             return Encoding.Default.GetString(buffer);
         }
 
-        public string CreateUpdateCookie(CreateUpdateJdCkHistoryDto ck)
+        public async Task<string> CreateUpdateCookie(CreateUpdateJdCkHistoryDto ck)
         {
             var result = "";
 

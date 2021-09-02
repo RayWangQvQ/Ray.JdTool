@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Services;
 
@@ -9,8 +10,8 @@ namespace Ray.JdTool.CkConfig
 {
     public interface ICkConfigAppService : IApplicationService, IRemoteService
     {
-        string GetConfigFileContent();
+        Task<string> GetConfigFileContent();
 
-        string CreateUpdateCookie(CreateUpdateJdCkHistoryDto ck);
+        Task<string> CreateUpdateCookie(CreateUpdateJdCkHistoryDto ck);
     }
 }

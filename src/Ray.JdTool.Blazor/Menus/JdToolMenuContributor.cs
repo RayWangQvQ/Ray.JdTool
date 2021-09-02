@@ -45,6 +45,16 @@ namespace Ray.JdTool.Blazor.Menus
                 )
             );
 
+            context.Menu.Items.Insert(
+                1,
+                new ApplicationMenuItem(
+                    JdToolMenus.CommitCookie,
+                    l["Menu:Commit"],
+                    "/commit-cookie",
+                    icon: "fas fa-home"
+                    )
+                );
+
             return Task.CompletedTask;
         }
 

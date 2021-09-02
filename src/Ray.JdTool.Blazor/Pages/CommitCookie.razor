@@ -1,0 +1,42 @@
+﻿@page "/commit-cookie"
+@using Ray.JdTool.CkConfig
+@using Ray.JdTool.JdCkHistories
+@inherits JdToolComponentBase
+
+<Text TextColor="TextColor.Secondary">
+    请输入你的JDCookie：
+</Text>
+<MemoEdit Rows="5" @bind-Text="@cookieStr" />
+
+<Button Color="Color.Primary" Clicked="@OnButtonClickedAsync">提交</Button>
+
+<Alert Color="Color.Success" @bind-Visible="@isAlertVisible">
+    <Heading Size="HeadingSize.Is4" TextColor="TextColor.Success">
+        提交成功！
+    </Heading>
+    <TextEdit ReadOnly="true" @bind-Text="@successStr"></TextEdit>
+</Alert>
+
+@code {
+
+    [Inject]
+    ICkConfigAppService CkConfigAppService { get; set; }
+
+    string cookieStr = "";
+    string successStr = "";
+    bool isAlertVisible = false;
+
+    private async Task OnButtonClickedAsync()
+    {
+        successStr = await CkConfigAppService.CreateUpdateCookie(new CreateUpdateJdCkHistoryDto() { FullStr = cookieStr });
+        if (successStr.IsNullOrWhiteSpace())
+        {
+            await Notify.Warn("提交失败，请检查");
+        }
+        else
+        {
+            await Notify.Success("提交成功");
+            isAlertVisible = true;
+        }
+    }
+}
