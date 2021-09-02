@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Ray.JdTool.JdCkHistories;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
@@ -18,15 +20,15 @@ namespace Ray.JdTool.EntityFrameworkCore
     [ReplaceDbContext(typeof(IIdentityDbContext))]
     [ReplaceDbContext(typeof(ITenantManagementDbContext))]
     [ConnectionStringName("Default")]
-    public class JdToolDbContext : 
+    public class JdToolDbContext :
         AbpDbContext<JdToolDbContext>,
         IIdentityDbContext,
         ITenantManagementDbContext
     {
         /* Add DbSet properties for your Aggregate Roots / Entities here. */
-        
+
         #region Entities from the modules
-        
+
         /* Notice: We only implemented IIdentityDbContext and ITenantManagementDbContext
          * and replaced them for this DbContext. This allows you to perform JOIN
          * queries for the entities of these modules over the repositories easily. You
@@ -37,7 +39,7 @@ namespace Ray.JdTool.EntityFrameworkCore
          * More info: Replacing a DbContext of a module ensures that the related module
          * uses this DbContext on runtime. Otherwise, it will use its own DbContext class.
          */
-        
+
         //Identity
         public DbSet<IdentityUser> Users { get; set; }
         public DbSet<IdentityRole> Roles { get; set; }
@@ -45,13 +47,16 @@ namespace Ray.JdTool.EntityFrameworkCore
         public DbSet<OrganizationUnit> OrganizationUnits { get; set; }
         public DbSet<IdentitySecurityLog> SecurityLogs { get; set; }
         public DbSet<IdentityLinkUser> LinkUsers { get; set; }
-        
+
         // Tenant Management
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<TenantConnectionString> TenantConnectionStrings { get; set; }
 
         #endregion
-        
+
+        public DbSet<JdCkHistory> JdCkHistories { get; set; }
+
+
         public JdToolDbContext(DbContextOptions<JdToolDbContext> options)
             : base(options)
         {
@@ -81,6 +86,14 @@ namespace Ray.JdTool.EntityFrameworkCore
             //    b.ConfigureByConvention(); //auto configure for the base class props
             //    //...
             //});
+
+            builder.Entity<JdCkHistory>(b =>
+            {
+                b.ToTable(JdToolConsts.DbTablePrefix + nameof(JdCkHistory), JdToolConsts.DbSchema);
+                b.ConfigureByConvention();
+
+                b.Property(nameof(JdCkHistory.PtPin)).IsRequired();
+            });
         }
     }
 }

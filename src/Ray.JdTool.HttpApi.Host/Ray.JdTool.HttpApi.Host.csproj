@@ -34,4 +34,12 @@
     <None Remove="Logs\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\cookie.sh" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\cookie.sh" />
+  </ItemGroup>
+
 </Project>

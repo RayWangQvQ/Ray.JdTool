@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Volo.Abp.Application.Dtos;
+using Volo.Abp.Application.Services;
+
+namespace Ray.JdTool.JdCkHistories
+{
+    public interface IJdCkHistoriesAppService : ICrudAppService<JdCkHistoryDto, Guid,
+        PagedAndSortedResultRequestDto, CreateUpdateJdCkHistoryDto>
+    {
+    }
+}
