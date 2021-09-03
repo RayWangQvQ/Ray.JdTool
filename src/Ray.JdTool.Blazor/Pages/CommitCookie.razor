@@ -6,15 +6,31 @@
 <Text TextColor="TextColor.Secondary">
     请输入你的JDCookie：
 </Text>
-<MemoEdit Rows="5" @bind-Text="@cookieStr" />
+<MemoEdit Rows="5" @bind-Text="@cookieStr" Placeholder="pt_pin=xxxx;pt_key=xxxxxxxxxx;" />
 
 <Button Color="Color.Primary" Clicked="@OnButtonClickedAsync">提交</Button>
 
 <Alert Color="Color.Success" @bind-Visible="@isAlertVisible">
-    <Heading Size="HeadingSize.Is4" TextColor="TextColor.Success">
-        提交成功！
+
+    <Heading Size="HeadingSize.Is4" TextColor="@(commitResult.Success ?TextColor.Success:TextColor.Warning)">
+        @(commitResult.Success ? "提交成功！" : "提交失败！")
     </Heading>
-    <TextEdit ReadOnly="true" @bind-Text="@successStr"></TextEdit>
+    @{
+        if (commitResult.CommitResultType == CommitResultType.Add)
+        {
+            <Paragraph>
+                检测到您之前未上过车，已为您新增一个车位，如下：
+            </Paragraph>
+        }
+
+        if (commitResult.CommitResultType == CommitResultType.Update)
+        {
+            <Paragraph>
+                检测到您是老乘客，已为您更新CK，如下：
+            </Paragraph>
+        }
+    }
+    <TextEdit ReadOnly="true" @bind-Text="@commitResult.ResultStr"></TextEdit>
 </Alert>
 
 @code {
@@ -23,13 +39,13 @@
     ICkConfigAppService CkConfigAppService { get; set; }
 
     string cookieStr = "";
-    string successStr = "";
+    CommitResult commitResult = new CommitResult();
     bool isAlertVisible = false;
 
     private async Task OnButtonClickedAsync()
     {
-        successStr = await CkConfigAppService.CreateUpdateCookie(new CreateUpdateJdCkHistoryDto() { FullStr = cookieStr });
-        if (successStr.IsNullOrWhiteSpace())
+        commitResult = await CkConfigAppService.CreateUpdateCookie(new CreateUpdateJdCkHistoryDto() { FullStr = cookieStr });
+        if (!commitResult.Success)
         {
             await Notify.Warn("提交失败，请检查");
         }

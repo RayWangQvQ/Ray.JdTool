@@ -12,6 +12,6 @@ namespace Ray.JdTool.CkConfig
     {
         Task<string> GetConfigFileContent();
 
-        Task<string> CreateUpdateCookie(CreateUpdateJdCkHistoryDto ck);
+        Task<CommitResult> CreateUpdateCookie(CreateUpdateJdCkHistoryDto ck);
     }
 }

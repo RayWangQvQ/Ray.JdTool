@@ -36,9 +36,9 @@ namespace Ray.JdTool
             return Encoding.Default.GetString(buffer);
         }
 
-        public async Task<string> CreateUpdateCookie(CreateUpdateJdCkHistoryDto ck)
+        public async Task<CommitResult> CreateUpdateCookie(CreateUpdateJdCkHistoryDto ck)
         {
-            var result = "";
+            var result = new CommitResult();
 
             JdCkHistory jdCk = ObjectMapper.Map<CreateUpdateJdCkHistoryDto, JdCkHistory>(ck);
 
@@ -50,9 +50,15 @@ namespace Ray.JdTool
             {
                 var line = match.Value;
                 var pre = line.Substring(0, line.IndexOf('='));
-                result = $"{pre}=\"{jdCk.SimpleStr}\"";
 
-                _configStr = _configStr.Replace(match.Value, result);
+                result = new CommitResult
+                {
+                    Success = true,
+                    CommitResultType = CommitResultType.Update,
+                    ResultStr = $"{pre}=\"{jdCk.SimpleStr}\""
+                };
+
+                _configStr = _configStr.Replace(match.Value, result.ResultStr);
             }
             else//不存在，则新增
             {
@@ -65,8 +71,13 @@ namespace Ray.JdTool
 
                 var newNum = int.Parse(numStr) + 1;
 
-                result = $"Cookie{newNum}=\"{jdCk.SimpleStr}\"";
-                _configStr = _configStr.Replace(lastLine, lastLine + Environment.NewLine + result);
+                result = new CommitResult
+                {
+                    Success = true,
+                    CommitResultType = CommitResultType.Add,
+                    ResultStr = $"Cookie{newNum}=\"{jdCk.SimpleStr}\""
+                };
+                _configStr = _configStr.Replace(lastLine, lastLine + Environment.NewLine + result.ResultStr);
             }
 
             SaveToConfigFile();

@@ -10,6 +10,7 @@ using Volo.Abp.Modularity;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using Volo.Abp.Uow;
 
 namespace Ray.JdTool.EntityFrameworkCore
 {
@@ -30,6 +31,11 @@ namespace Ray.JdTool.EntityFrameworkCore
         public override void PreConfigureServices(ServiceConfigurationContext context)
         {
             JdToolEfCoreEntityExtensionMappings.Configure();
+
+            Configure<AbpUnitOfWorkDefaultOptions>(options =>
+            {
+                options.TransactionBehavior = UnitOfWorkTransactionBehavior.Disabled;
+            });
         }
 
         public override void ConfigureServices(ServiceConfigurationContext context)
