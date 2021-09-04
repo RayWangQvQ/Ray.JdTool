@@ -1,22 +1,25 @@
 version: '3.4'
 
 services:
-  ray.jdtool.blazor:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-    ports:
-      - "80"
-      - "443"
-    volumes:
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
   ray.jdtool.httpapi.host:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=http://+:80;https://+:443
+    tty: true
     ports:
-      - "80"
-      - "443"
+      - 9500:80
+      #- 19500:443
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  ray.jdtool.blazor:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80;https://+:443
+    tty: true
+    ports:
+      - 9501:80
+      #- 19501:443
+    volumes:
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

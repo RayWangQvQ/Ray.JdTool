@@ -28,6 +28,7 @@ using Volo.Abp.Modularity;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
+using Ray.JdTool.Data;
 
 namespace Ray.JdTool
 {
@@ -55,7 +56,7 @@ namespace Ray.JdTool
             ConfigureConventionalControllers();
             ConfigureAuthentication(context, configuration);
             ConfigureLocalization();
-            ConfigureVirtualFileSystem(context);
+            ConfigureVirtualFileSystem(context, configuration);
             ConfigureCors(context, configuration);
             ConfigureSwaggerServices(context, configuration);
         }
@@ -83,11 +84,11 @@ namespace Ray.JdTool
             });
         }
 
-        private void ConfigureVirtualFileSystem(ServiceConfigurationContext context)
+        private void ConfigureVirtualFileSystem(ServiceConfigurationContext context, IConfiguration configuration)
         {
             var hostingEnvironment = context.Services.GetHostingEnvironment();
 
-            if (hostingEnvironment.IsDevelopment())
+            if (hostingEnvironment.IsDevelopment() && configuration["DOTNET_RUNNING_IN_CONTAINER"] != "true")
             {
                 Configure<AbpVirtualFileSystemOptions>(options =>
                 {
@@ -141,7 +142,7 @@ namespace Ray.JdTool
                 },
                 options =>
                 {
-                    options.SwaggerDoc("v1", new OpenApiInfo {Title = "JdTool API", Version = "v1"});
+                    options.SwaggerDoc("v1", new OpenApiInfo { Title = "JdTool API", Version = "v1" });
                     options.DocInclusionPredicate((docName, description) => true);
                     options.CustomSchemaIds(type => type.FullName);
                 });
@@ -175,26 +176,29 @@ namespace Ray.JdTool
         {
             context.Services.AddCors(options =>
             {
-                options.AddDefaultPolicy( builder =>
-                {
-                    builder
-                        .WithOrigins(
-                            configuration["App:CorsOrigins"]
-                                .Split(",", StringSplitOptions.RemoveEmptyEntries)
-                                .Select(o => o.RemovePostFix("/"))
-                                .ToArray()
-                        )
-                        .WithAbpExposedHeaders()
-                        .SetIsOriginAllowedToAllowWildcardSubdomains()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials();
-                });
+                options.AddDefaultPolicy(builder =>
+               {
+                   builder
+                       .WithOrigins(
+                           configuration["App:CorsOrigins"]
+                               .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                               .Select(o => o.RemovePostFix("/"))
+                               .ToArray()
+                       )
+                       .WithAbpExposedHeaders()
+                       .SetIsOriginAllowedToAllowWildcardSubdomains()
+                       .AllowAnyHeader()
+                       .AllowAnyMethod()
+                       .AllowCredentials();
+               });
             });
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
+            var migrate = context.ServiceProvider.GetRequiredService<JdToolDbMigrationService>();
+            migrate.MigrateAsync().GetAwaiter().GetResult();
+
             var app = context.GetApplicationBuilder();
             var env = context.GetEnvironment();
 

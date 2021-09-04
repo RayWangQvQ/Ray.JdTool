@@ -1,15 +1,15 @@
 version: '3.4'
 
 services:
-  ray.jdtool.blazor:
-    image: ${DOCKER_REGISTRY-}rayjdtoolblazor
-    build:
-      context: .
-      dockerfile: src/Ray.JdTool.Blazor/Dockerfile
-
   ray.jdtool.httpapi.host:
     image: ${DOCKER_REGISTRY-}rayjdtoolhttpapihost
     build:
       context: .
       dockerfile: src/Ray.JdTool.HttpApi.Host/Dockerfile
+
+  ray.jdtool.blazor:
+    image: ${DOCKER_REGISTRY-}rayjdtoolblazor
+    build:
+      context: .
+      dockerfile: src/Ray.JdTool.Blazor/Dockerfile
 

@@ -8,6 +8,7 @@ Cookie1="123"
 Cookie2="456"
 Cookie3="pt_pin=123;pt_key=abc;"
 Cookie4="pt_pin=xxxx;pt_key=xxxxxxxxxx;"
+Cookie5="pt_pin=dasgfdafa;pt_key=dgsdregar;"
 
 
 ################################## 临时屏蔽某个Cookie（选填） ##################################

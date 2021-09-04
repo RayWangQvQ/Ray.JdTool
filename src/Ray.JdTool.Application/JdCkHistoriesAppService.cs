@@ -18,15 +18,12 @@ namespace Ray.JdTool
         IJdCkHistoriesAppService
     {
         private readonly IRepository<JdCkHistory, Guid> _repository;
-        private readonly IFileProvider _fileProvider;
         private readonly IWebHostEnvironment _env;
 
         public JdCkHistoriesAppService(IRepository<JdCkHistory, Guid> repository,
-            IFileProvider fileProvider,
             IWebHostEnvironment env) : base(repository)
         {
             _repository = repository;
-            _fileProvider = fileProvider;
             _env = env;
         }
     }

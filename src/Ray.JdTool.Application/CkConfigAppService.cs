@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.FileProviders;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.FileProviders;
 using Ray.JdTool.CkConfig;
 using Ray.JdTool.JdCkHistories;
 using System;
@@ -14,26 +15,35 @@ namespace Ray.JdTool
     public class CkConfigAppService : JdToolAppService, ICkConfigAppService
     {
         private readonly IFileProvider _fileProvider;
+        private readonly IWebHostEnvironment _env;
         private string _configStr;
         private IFileInfo _fileInfo;
 
-        public CkConfigAppService(IFileProvider fileProvider)
+        //public CkConfigAppService(IFileProvider fileProvider)
+        public CkConfigAppService(IWebHostEnvironment env)
         {
-            _fileProvider = fileProvider;
-            _fileInfo = _fileProvider.GetFileInfo("/cookie.sh");
+            this._env = env;
+            //_fileProvider = fileProvider;
+            //_fileInfo = _fileProvider.GetFileInfo("/cookie.sh");
             _configStr = GetConfigFileContent().Result;
         }
 
         public async Task<string> GetConfigFileContent()
         {
+            /*
             byte[] buffer;
             using (var stream = _fileInfo.CreateReadStream())
             {
                 buffer = new byte[stream.Length];
                 stream.Read(buffer, 0, buffer.Length);
             }
+            */
+            //string path = _env.ContentRootPath;
+            string path = Path.Combine(_env.WebRootPath, "cookie.sh");
+            var re = await File.ReadAllTextAsync(path);
 
-            return Encoding.Default.GetString(buffer);
+            //return Encoding.Default.GetString(buffer);
+            return re;
         }
 
         public async Task<CommitResult> CreateUpdateCookie(CreateUpdateJdCkHistoryDto ck)
@@ -86,7 +96,8 @@ namespace Ray.JdTool
 
         private void SaveToConfigFile()
         {
-            File.WriteAllText(_fileInfo.PhysicalPath, _configStr);
+            string path = Path.Combine(_env.WebRootPath, "cookie.sh");
+            File.WriteAllText(path, _configStr);
         }
     }
 }
