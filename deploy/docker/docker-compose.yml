@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  ray.jdtool.httpapi.host:
+    image: rayjdtoolhttpapihost
+    ports:
+      - 9001:9001
+    tty: true
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:9001
+
+  ray.jdtool.blazor:
+    image: rayjdtoolblazor
+    ports:
+      - 9000:9000
+    tty: true
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:9000
+
