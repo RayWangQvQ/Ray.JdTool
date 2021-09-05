@@ -14,7 +14,6 @@ COPY ["src/Ray.JdTool.Domain.Shared/Ray.JdTool.Domain.Shared.csproj", "src/Ray.J
 COPY ["src/Ray.JdTool.Domain/Ray.JdTool.Domain.csproj", "src/Ray.JdTool.Domain/"]
 COPY ["src/Ray.JdTool.HttpApi/Ray.JdTool.HttpApi.csproj", "src/Ray.JdTool.HttpApi/"]
 COPY ["src/Ray.JdTool.EntityFrameworkCore/Ray.JdTool.EntityFrameworkCore.csproj", "src/Ray.JdTool.EntityFrameworkCore/"]
-COPY ["src/Ray.JdTool.Blazor/Ray.JdTool.Blazor.csproj", "src/Ray.JdTool.Blazor/"]
 RUN dotnet restore "src/Ray.JdTool.HttpApi.Host/Ray.JdTool.HttpApi.Host.csproj"
 COPY . .
 WORKDIR "/src/src/Ray.JdTool.HttpApi.Host"

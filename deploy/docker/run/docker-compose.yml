@@ -1,0 +1,34 @@
+version: '3.4'
+
+services:
+  ray.jdtool.httpapi.host:
+    image: zai7lou/jd_tool_api
+    container_name: JdToolApi
+    ports:
+      - 9001:9001
+    tty: true
+    volumes:
+      - ./App/Logs:/app/Logs
+      - ../js_tool/jd-docker/config/cookie.sh:/app/wwwroot/cookie.sh
+      - ./App/appsettings.Production.json:/app/appsettings.Production.json
+    networks:
+      - myNetWork
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:9001
+
+  ray.jdtool.blazor:
+    image: zai7lou/jd_tool_web
+    container_name: JdToolWeb
+    ports:
+      - 9000:9000
+    tty: true
+    networks:
+      - myNetWork
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:9000
+
+networks:
+  myNetWork:
+
