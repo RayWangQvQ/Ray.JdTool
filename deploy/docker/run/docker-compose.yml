@@ -10,12 +10,13 @@ services:
     volumes:
       - ./App/Logs:/app/Logs
       - ../js_tool/jd-docker/config/cookie.sh:/app/wwwroot/cookie.sh
-      - ./App/appsettings.Production.json:/app/appsettings.Production.json
     networks:
       - myNetWork
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:9001
+      - App:CorsOrigins=http://106.15.176.79:9000
+      - App:RedirectAllowedUrls=*
 
   ray.jdtool.blazor:
     image: zai7lou/jd_tool_web
@@ -23,11 +24,14 @@ services:
     ports:
       - 9000:9000
     tty: true
+    volumes:
+      - ./App/blazor/appsettings.Production.json:/app/appsettings.Production.json
+      - ./App/blazor/nginx.conf:/etc/nginx/nginx.conf
+    environment:
+      - AuthServer:Authority=http://106.15.176.79:9000
+      - RemoteServices:Default:BaseUrl=http://106.15.176.79:9000
     networks:
       - myNetWork
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-      - ASPNETCORE_URLS=http://+:9000
 
 networks:
   myNetWork:

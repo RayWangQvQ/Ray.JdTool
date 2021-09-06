@@ -39,6 +39,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ray.JdTool.Blazor", "src\Ra
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{A06178A8-4E9B-4B19-ABBC-84481C6081A0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{ECB461BE-3BA7-4768-B890-712C0C5B3B51}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{D4136CF9-252E-4F86-9665-A0D707F4F8C4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "run", "run", "{ECAD4CCD-F20F-4E31-96DF-BC1768B58458}"
+	ProjectSection(SolutionItems) = preProject
+		deploy\docker\run\docker-compose.yml = deploy\docker\run\docker-compose.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +138,8 @@ Global
 		{AA94D832-1CCC-4715-95A9-A483F23A1A5D} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
 		{748584B1-BA69-4F6A-81AA-F4BDE6BCE29D} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
 		{27B2DDC7-8B75-4322-A312-25419C15D9D8} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
+		{D4136CF9-252E-4F86-9665-A0D707F4F8C4} = {ECB461BE-3BA7-4768-B890-712C0C5B3B51}
+		{ECAD4CCD-F20F-4E31-96DF-BC1768B58458} = {D4136CF9-252E-4F86-9665-A0D707F4F8C4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28315BFD-90E7-4E14-A2EA-F3D23AF4126F}
