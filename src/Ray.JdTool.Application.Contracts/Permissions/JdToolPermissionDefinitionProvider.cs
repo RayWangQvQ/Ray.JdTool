@@ -11,6 +11,9 @@ namespace Ray.JdTool.Permissions
             var myGroup = context.AddGroup(JdToolPermissions.GroupName);
             //Define your own permissions here. Example:
             //myGroup.AddPermission(JdToolPermissions.MyPermission1, L("Permission:MyPermission1"));
+
+            myGroup.AddPermission(JdToolPermissions.GetAllCookieConfig, L("Permission:GetAllCookieConfig"));
+            myGroup.AddPermission(JdToolPermissions.CommitCookie, L("Permission:CommitCookie"));
         }
 
         private static LocalizableString L(string name)

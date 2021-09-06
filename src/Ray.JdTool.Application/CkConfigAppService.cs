@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.FileProviders;
 using Ray.JdTool.CkConfig;
 using Ray.JdTool.JdCkHistories;
+using Ray.JdTool.Permissions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,38 +16,22 @@ namespace Ray.JdTool
 {
     public class CkConfigAppService : JdToolAppService, ICkConfigAppService
     {
-        private readonly IFileProvider _fileProvider;
         private readonly IWebHostEnvironment _env;
         private string _configStr;
-        private IFileInfo _fileInfo;
 
-        //public CkConfigAppService(IFileProvider fileProvider)
         public CkConfigAppService(IWebHostEnvironment env)
         {
-            this._env = env;
-            //_fileProvider = fileProvider;
-            //_fileInfo = _fileProvider.GetFileInfo("/cookie.sh");
-            _configStr = GetConfigFileContent().Result;
+            _env = env;
+            _configStr = DoGetConfigFileContent();
         }
 
+        [Authorize(JdToolPermissions.GetAllCookieConfig)]
         public async Task<string> GetConfigFileContent()
         {
-            /*
-            byte[] buffer;
-            using (var stream = _fileInfo.CreateReadStream())
-            {
-                buffer = new byte[stream.Length];
-                stream.Read(buffer, 0, buffer.Length);
-            }
-            */
-            //string path = _env.ContentRootPath;
-            string path = Path.Combine(_env.WebRootPath, "cookie.sh");
-            var re = await File.ReadAllTextAsync(path);
-
-            //return Encoding.Default.GetString(buffer);
-            return re;
+            return DoGetConfigFileContent();
         }
 
+        [Authorize(JdToolPermissions.CommitCookie)]
         public async Task<CommitResult> CreateUpdateCookie(CreateUpdateJdCkHistoryDto ck)
         {
             var result = new CommitResult();
@@ -92,6 +78,24 @@ namespace Ray.JdTool
 
             SaveToConfigFile();
             return result;
+        }
+
+        private string DoGetConfigFileContent()
+        {
+            /*
+            byte[] buffer;
+            using (var stream = _fileInfo.CreateReadStream())
+            {
+                buffer = new byte[stream.Length];
+                stream.Read(buffer, 0, buffer.Length);
+            }
+            */
+            //string path = _env.ContentRootPath;
+            string path = Path.Combine(_env.WebRootPath, "cookie.sh");
+            var re = File.ReadAllText(path);
+
+            //return Encoding.Default.GetString(buffer);
+            return re;
         }
 
         private void SaveToConfigFile()
