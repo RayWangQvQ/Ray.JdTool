@@ -25,11 +25,8 @@ services:
       - 9000:9000
     tty: true
     volumes:
-      - ./App/blazor/appsettings.Production.json:/app/appsettings.Production.json
-      - ./App/blazor/nginx.conf:/etc/nginx/nginx.conf
-    environment:
-      - AuthServer:Authority=http://106.15.176.79:9000
-      - RemoteServices:Default:BaseUrl=http://106.15.176.79:9000
+      - ./App/blazor/appsettings.Production.json:/app/appsettings.Production.json # todo:可以使用entry的sh脚本，来用env替换配置
+    # - ./App/blazor/nginx.conf:/etc/nginx/nginx.conf
     networks:
       - myNetWork
 

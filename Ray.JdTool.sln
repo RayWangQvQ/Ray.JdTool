@@ -48,6 +48,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "run", "run", "{ECAD4CCD-F20
 		deploy\docker\run\docker-compose.yml = deploy\docker\run\docker-compose.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{DC787F0A-2165-4E62-98BE-AB641B4F2050}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "blazor", "blazor", "{8101907A-2231-46C1-AC4D-A80FF9984137}"
+	ProjectSection(SolutionItems) = preProject
+		deploy\docker\run\App\blazor\appsettings.Production.json = deploy\docker\run\App\blazor\appsettings.Production.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{B2F05C2F-DC66-47F0-AC14-3CAADD7969C6}"
+	ProjectSection(SolutionItems) = preProject
+		deploy\docker\build\docker_build.cmd = deploy\docker\build\docker_build.cmd
+		deploy\docker\build\docker_build_api.cmd = deploy\docker\build\docker_build_api.cmd
+		deploy\docker\build\docker_build_web.cmd = deploy\docker\build\docker_build_web.cmd
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -140,6 +154,9 @@ Global
 		{27B2DDC7-8B75-4322-A312-25419C15D9D8} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
 		{D4136CF9-252E-4F86-9665-A0D707F4F8C4} = {ECB461BE-3BA7-4768-B890-712C0C5B3B51}
 		{ECAD4CCD-F20F-4E31-96DF-BC1768B58458} = {D4136CF9-252E-4F86-9665-A0D707F4F8C4}
+		{DC787F0A-2165-4E62-98BE-AB641B4F2050} = {ECAD4CCD-F20F-4E31-96DF-BC1768B58458}
+		{8101907A-2231-46C1-AC4D-A80FF9984137} = {DC787F0A-2165-4E62-98BE-AB641B4F2050}
+		{B2F05C2F-DC66-47F0-AC14-3CAADD7969C6} = {D4136CF9-252E-4F86-9665-A0D707F4F8C4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28315BFD-90E7-4E14-A2EA-F3D23AF4126F}
