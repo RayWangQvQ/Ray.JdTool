@@ -5,6 +5,9 @@ WORKDIR /app
 EXPOSE 9001
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+WORKDIR /app
+RUN dotnet dev-certs https --clean
+RUN dotnet dev-certs https -ep ./JdToolApi.pfx  -p crypticpassword
 WORKDIR /src
 COPY ["NuGet.Config", "."]
 COPY ["src/Ray.JdTool.HttpApi.Host/Ray.JdTool.HttpApi.Host.csproj", "src/Ray.JdTool.HttpApi.Host/"]

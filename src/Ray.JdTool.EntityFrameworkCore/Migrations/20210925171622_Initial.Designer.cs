@@ -10,15 +10,15 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Ray.JdTool.Migrations
 {
     [DbContext(typeof(JdToolDbContext))]
-    [Migration("20210902045322_AddJdCkHistory")]
-    partial class AddJdCkHistory
+    [Migration("20210925171622_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("_Abp_DatabaseProvider", EfCoreDatabaseProvider.Sqlite)
-                .HasAnnotation("ProductVersion", "5.0.9");
+                .HasAnnotation("ProductVersion", "5.0.10");
 
             modelBuilder.Entity("Ray.JdTool.JdCkHistories.JdCkHistory", b =>
                 {

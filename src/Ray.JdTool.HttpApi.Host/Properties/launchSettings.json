@@ -3,20 +3,10 @@
     "Ray.JdTool.HttpApi.Host": {
       "commandName": "Project",
       "launchBrowser": true,
+      "applicationUrl": "http://localhost:9001",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "http://localhost:9001"
-    },
-    "Docker": {
-      "commandName": "Docker",
-      "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
-      "environmentVariables": {
-        "ASPNETCORE_URLS": "http://+:9001;https://+:443"
-      },
-      "publishAllPorts": true,
-      "useSSL": true
+      }
     }
   }
 }

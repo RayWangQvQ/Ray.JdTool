@@ -9,15 +9,18 @@ services:
     tty: true
     volumes:
       - ./App/Logs:/app/Logs
+      - ./App/JdToolApi.pfx:/app/JdToolApi.pfx
       - ../js_tool/jd-docker/config/cookie.sh:/app/wwwroot/cookie.sh
     networks:
       - myNetWork
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-      - ASPNETCORE_URLS=http://+:9001
-      - App:CorsOrigins=http://106.15.176.79:9000
-      - App:RedirectAllowedUrls=http://106.15.176.79:9001,http://106.15.176.79:9000
-      - App:ClientUrl=http://106.15.176.79:9000
+      - ENVIRONMENT=Development
+      - URLS=http://+:9001
+      - App:CorsOrigins=http://localhost:9000
+      - App:RedirectAllowedUrls=http://localhost:9001,http://localhost:9000
+      #- App:ClientUrl=http://localhost:9000
+      #- Kestrel__Certificates__Default__Password=crypticpassword
+      #- Kestrel__Certificates__Default__Path=./JdToolApi.pfx
 
   ray.jdtool.blazor:
     image: zai7lou/jd_tool_web

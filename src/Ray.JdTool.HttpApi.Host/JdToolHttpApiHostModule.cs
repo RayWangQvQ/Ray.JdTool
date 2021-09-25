@@ -28,7 +28,6 @@ using Volo.Abp.Modularity;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
-using Ray.JdTool.Data;
 
 namespace Ray.JdTool
 {
@@ -56,9 +55,11 @@ namespace Ray.JdTool
             ConfigureConventionalControllers();
             ConfigureAuthentication(context, configuration);
             ConfigureLocalization();
-            ConfigureVirtualFileSystem(context, configuration);
+            ConfigureVirtualFileSystem(context);
             ConfigureCors(context, configuration);
             ConfigureSwaggerServices(context, configuration);
+
+            context.Services.AddSameSiteCookiePolicy();
         }
 
         private void ConfigureBundles()
@@ -84,11 +85,11 @@ namespace Ray.JdTool
             });
         }
 
-        private void ConfigureVirtualFileSystem(ServiceConfigurationContext context, IConfiguration configuration)
+        private void ConfigureVirtualFileSystem(ServiceConfigurationContext context)
         {
             var hostingEnvironment = context.Services.GetHostingEnvironment();
 
-            if (hostingEnvironment.IsDevelopment() && configuration["DOTNET_RUNNING_IN_CONTAINER"] != "true")
+            if (hostingEnvironment.IsDevelopment())
             {
                 Configure<AbpVirtualFileSystemOptions>(options =>
                 {
@@ -196,9 +197,6 @@ namespace Ray.JdTool
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
-            var migrate = context.ServiceProvider.GetRequiredService<JdToolDbMigrationService>();
-            migrate.MigrateAsync().GetAwaiter().GetResult();
-
             var app = context.GetApplicationBuilder();
             var env = context.GetEnvironment();
 
@@ -213,6 +211,8 @@ namespace Ray.JdTool
             {
                 app.UseErrorPage();
             }
+
+            app.UseCookiePolicy();
 
             app.UseCorrelationId();
             app.UseStaticFiles();
