@@ -39,7 +39,7 @@ namespace Ray.JdTool.Data
         }
 
         public async Task MigrateAsync()
-        {
+         {
             var initialMigrationAdded = AddInitialMigrationIfNotExist();
 
             if (initialMigrationAdded)

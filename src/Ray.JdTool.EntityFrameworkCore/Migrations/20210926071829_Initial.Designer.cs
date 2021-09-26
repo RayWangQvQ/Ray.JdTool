@@ -10,7 +10,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Ray.JdTool.Migrations
 {
     [DbContext(typeof(JdToolDbContext))]
-    [Migration("20210925171622_Initial")]
+    [Migration("20210926071829_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

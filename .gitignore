@@ -260,3 +260,4 @@ src/Ray.JdTool.HttpApi.Host/Logs/*
 src/Ray.JdTool.DbMigrator/Logs/*
 src/Ray.JdTool.Blazor.Server/Logs/*
 src/Ray.JdTool.Blazor.Server.Tiered/Logs/*
+JdTool.db

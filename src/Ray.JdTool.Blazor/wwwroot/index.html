@@ -8,10 +8,10 @@
     <base href="/" />
 
     <!--ABP:Styles-->
-    <link href="global.css?_v=637553771559216839" rel="stylesheet"/>
-    <link href="main.css" rel="stylesheet"/>
+    <link href="global.css?_v=637553771559216839" rel="stylesheet" />
+    <link href="main.css" rel="stylesheet" />
     <!--/ABP:Styles-->
-    <link href="Ray.JdTool.Blazor.styles.css" rel="stylesheet"/>
+    <link href="Ray.JdTool.Blazor.styles.css" rel="stylesheet" />
 </head>
 
 <body class="abp-application-layout bg-light">
@@ -22,9 +22,35 @@
         </div>
     </div>
 
+    <!--br压缩-->
+    <script src="decode.js"></script>
+    <script src="_framework/blazor.webassembly.js" autostart="false"></script>
+    <!--/br压缩-->
     <!--ABP:Scripts-->
-    <script src="global.js?_v=637553771563227337"></script>
+    <script src="global.js?_v=637553771563227337" autostart="false"></script>
     <!--/ABP:Scripts-->
 
+    <script type="module">
+        import { BrotliDecode } from './decode.js';
+        Blazor.start({
+            loadBootResource: function (type, name, defaultUri, integrity) {
+                if (type !== 'dotnetjs' && location.hostname !== 'localhost') {
+                    return (async function () {
+                        const response = await fetch(defaultUri + '.br', { cache: 'no-cache' });
+                        if (!response.ok) {
+                            throw new Error(response.statusText);
+                        }
+                        const originalResponseBuffer = await response.arrayBuffer();
+                        const originalResponseArray = new Int8Array(originalResponseBuffer);
+                        const decompressedResponseArray = BrotliDecode(originalResponseArray);
+                        const contentType = type ===
+                            'dotnetwasm' ? 'application/wasm' : 'application/octet-stream';
+                        return new Response(decompressedResponseArray,
+                            { headers: { 'content-type': contentType } });
+                    })();
+                }
+            }
+        });
+    </script>
 </body>
 </html>

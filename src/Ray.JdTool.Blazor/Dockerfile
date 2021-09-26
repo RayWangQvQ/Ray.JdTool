@@ -17,7 +17,7 @@ WORKDIR "/src/src/Ray.JdTool.Blazor"
 RUN dotnet build "Ray.JdTool.Blazor.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Ray.JdTool.Blazor.csproj" -c Release -o /app/publish
+RUN dotnet publish "Ray.JdTool.Blazor.csproj" -c Release --runtime linux-x64 --self-contained true -p:PublishTrimmed=true -o /app/publish
 
 FROM base AS final
 WORKDIR /app

@@ -51,7 +51,7 @@ namespace Ray.JdTool.Blazor.Menus
                     JdToolMenus.CommitCookie,
                     l["Menu:Commit"],
                     "/commit-cookie",
-                    icon: "fas fa-home"
+                    icon: "fas fa-cookie-bite"
                     )
                 );
 

@@ -6,7 +6,11 @@
 <Text TextColor="TextColor.Secondary">
     请输入你的JDCookie：
 </Text>
-<MemoEdit Rows="5" @bind-Text="@cookieStr" Placeholder="pt_pin=xxxx;pt_key=xxxxxxxxxx;" />
+<Blazorise.Link To="https://www.bilibili.com/read/cv12903201" Target="Target.Blank">
+    （如何获取我的Cookie？）
+</Blazorise.Link>
+
+<MemoEdit Rows="5" @bind-Text="@cookieStr" Placeholder="如：pt_pin=xxxx;pt_key=xxxxxxxxxx; 完整Cookie字符串或只有pt_pin和pt_key的都可以" />
 
 <Button Color="Color.Primary" Clicked="@OnButtonClickedAsync">提交</Button>
 
