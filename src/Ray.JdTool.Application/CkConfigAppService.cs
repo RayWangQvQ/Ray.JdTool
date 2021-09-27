@@ -47,6 +47,10 @@ namespace Ray.JdTool
                 var line = match.Value;
                 var pre = line.Substring(0, line.IndexOf('='));
 
+                //去除注释
+                pre = pre.Replace("#", "");
+
+                //更新Cookie
                 result = new CommitResult
                 {
                     Success = true,
@@ -55,6 +59,11 @@ namespace Ray.JdTool
                 };
 
                 _configStr = _configStr.Replace(match.Value, result.ResultStr);
+
+                //去除阻止配置
+                var num = pre.Replace(" ", "")
+                    .Replace("Cookie", "");
+                RemoveFromTempBlockStr(num);
             }
             else//不存在，则新增
             {
@@ -102,6 +111,30 @@ namespace Ray.JdTool
         {
             string path = Path.Combine(_env.WebRootPath, "cookie.sh");
             File.WriteAllText(path, _configStr);
+        }
+
+        private void RemoveFromTempBlockStr(string num)
+        {
+            var pattern = $"TempBlockCookie=.*#屏蔽";
+            var match = new Regex(pattern).Match(_configStr);
+
+            if (match.Success)
+            {
+                var line = match.Value;
+                if (line.Contains("\"\"")) return;
+
+                var blockNums = line.Substring(line.IndexOf("\"") + 1, line.LastIndexOf("\"") - line.IndexOf("\"") - 1);
+                var list = blockNums.Split(' ').ToList();
+
+                if (list.Contains(num))
+                {
+                    list.Remove(num);
+                }
+
+                var newLine = $"TempBlockCookie=\"{string.Join(" ", list)}\"#屏蔽";
+
+                _configStr = _configStr.Replace(line, newLine);
+            }
         }
     }
 }

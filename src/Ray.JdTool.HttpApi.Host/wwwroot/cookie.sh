@@ -4,11 +4,8 @@
 ## 2. 还可以通过浏览器开发工具获取，此方式获得的Cookie也为1个月有效期，教程：https://github.com/LXK9301/jd_scripts/wiki/GetCookies
 ## 必须按数字顺序1、2、3、4...依次编号下去，例子只有6个，超出6个你继续往下编号即可
 ## 不允许有汉字，如果ID有汉字，请在PC浏览器上获取Cookie，会自动将汉字转换为URL编码
-Cookie1="123"
-Cookie2="456"
-Cookie3="pt_pin=123;pt_key=abc;"
-Cookie4="pt_pin=xxxx;pt_key=xxxxxxxxxx;"
-Cookie5="pt_pin=dasgfdafa;pt_key=dgsdregar;"
+Cookie1="pt_pin=test;pt_key=123;"
+Cookie2=""
 
 
 ################################## 临时屏蔽某个Cookie（选填） ##################################
@@ -29,4 +26,4 @@ Cookie5="pt_pin=dasgfdafa;pt_key=dgsdregar;"
 ##     TempBlockCookie="3 6"    # 账号3、账号6不玩京东赚赚和宠汪汪
 ##     ;;
 ##  esac
-TempBlockCookie=""
+TempBlockCookie="2"#屏蔽
