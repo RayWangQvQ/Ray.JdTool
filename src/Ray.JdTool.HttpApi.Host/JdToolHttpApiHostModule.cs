@@ -131,6 +131,15 @@ namespace Ray.JdTool
                             HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                     };
                 });
+
+            context.Services.AddAuthentication()
+                .AddGitHub(options =>
+                {
+                    IConfigurationSection githubAuthNSection = configuration.GetSection("Authentication:GitHub");
+
+                    options.ClientId = githubAuthNSection["ClientId"];
+                    options.ClientSecret = githubAuthNSection["ClientSecret"];
+                });
         }
 
         private static void ConfigureSwaggerServices(ServiceConfigurationContext context, IConfiguration configuration)
