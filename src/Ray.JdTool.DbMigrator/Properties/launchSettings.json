@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Ray.JdTool.DbMigrator": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+        //"DOTNET_ENVIRONMENT": "Production"
+      }
+    }
+  }
+}
