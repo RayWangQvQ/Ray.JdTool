@@ -16,6 +16,8 @@ namespace Ray.JdTool.Controllers
 
         public ActionResult Index()
         {
+            return Redirect("~/swagger");
+
             var homePage = _configuration["App:ClientUrl"];
             if (homePage.IsNullOrEmpty())
             {

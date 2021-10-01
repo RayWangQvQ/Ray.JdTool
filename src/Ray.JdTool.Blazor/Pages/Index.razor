@@ -5,33 +5,38 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 <div class="container">
-    <div class="p-5 text-center">
+    <Div TextAlignment="TextAlignment.Center">
+        <Figure Size="FigureSize.Is256x256">
+            <FigureImage Source="@LogoUrl" AlternateText="256x256" />
+        </Figure>
+    </Div>
+    <Div TextAlignment="TextAlignment.Center">
         <Badge Color="Color.Success" class="mb-4">
             <h5 class="m-1"> <i class="fas fa-rocket"></i> Congratulations, <strong>JdTool</strong> is successfully running!</h5>
         </Badge>
+        <br />
 
-        <h1>Welcome to the Application</h1>
+        <h1>Welcome to my site</h1>
 
         <p class="lead px-lg-5 mx-lg-5">@L["LongWelcomeMessage"]</p>
 
-        @if ( !CurrentUser.IsAuthenticated )
+        @if (!CurrentUser.IsAuthenticated)
         {
             <a class="btn btn-primary" href="/authentication/login">
                 <i class="fa fa-sign-in-alt"></i> @L["Login"]
             </a>
         }
-    </div>
+    </Div>
 
-    <div class="my-3 text-center">
-        <h3>Let's improve your application!</h3>
-        <p>Here are some links to help you get started:</p>
-    </div>
+    <Div TextAlignment="TextAlignment.Center">
+        @*<h3>Let's go!</h3>*@
+        <p>Here are some links to help you get to know me:</p>
+    </Div>
 
-    <div class="mb-5 text-center">
+    <Div TextAlignment="TextAlignment.Center">
         <p class="align-middle">
-            <a href="https://twitter.com/abpframework" target="_blank" class="mx-2"><i class="fab fa-twitter"></i><span class="text-secondary"> Abp Framework</span></a>
-            <a href="https://twitter.com/abpcommercial" target="_blank" class="mx-2"><i class="fab fa-twitter"></i><span class="text-secondary"> Abp Commercial</span></a>
-            <a href="https://github.com/abpframework/abp" target="_blank" class="mx-2"><i class="fab fa-github"></i><span class="text-secondary"> abpframework</span></a>
+            <a href="https://github.com/RayWangQvQ" target="_blank" class="mx-2"><i class="fab fa-github"></i><span class="text-secondary"> GitHub</span></a>
+            <a href="https://www.cnblogs.com/RayWang" target="_blank" class="mx-2"><i class="fas fa-blog"></i><span class="text-secondary"> Blog</span></a>
         </p>
-    </div>
+    </Div>
 </div>

@@ -132,14 +132,39 @@ namespace Ray.JdTool
                     };
                 });
 
-            context.Services.AddAuthentication()
+            //Github
+            IConfigurationSection githubAuthSection = configuration.GetSection("Authentication:GitHub");
+            if (!githubAuthSection["ClientId"].IsNullOrWhiteSpace())
+            {
+                context.Services.AddAuthentication()
                 .AddGitHub(options =>
                 {
-                    IConfigurationSection githubAuthNSection = configuration.GetSection("Authentication:GitHub");
-
-                    options.ClientId = githubAuthNSection["ClientId"];
-                    options.ClientSecret = githubAuthNSection["ClientSecret"];
+                    options.ClientId = githubAuthSection["ClientId"];
+                    options.ClientSecret = githubAuthSection["ClientSecret"];
                 });
+            }
+
+            //微信
+            IConfigurationSection weixinAuthSection = configuration.GetSection("Authentication:Weixin");
+            if (!weixinAuthSection["ClientId"].IsNullOrWhiteSpace())
+            {
+                context.Services.AddAuthentication().AddWeixin(options =>
+                 {
+                     options.ClientId = weixinAuthSection["ClientId"];
+                     options.ClientSecret = weixinAuthSection["ClientSecret"];
+                 });
+            }
+
+            //微信
+            IConfigurationSection qqAuthSection = configuration.GetSection("Authentication:Qq");
+            if (!qqAuthSection["ClientId"].IsNullOrWhiteSpace())
+            {
+                context.Services.AddAuthentication().AddQQ(options =>
+                {
+                    options.ClientId = weixinAuthSection["ClientId"];
+                    options.ClientSecret = weixinAuthSection["ClientSecret"];
+                });
+            }
         }
 
         private static void ConfigureSwaggerServices(ServiceConfigurationContext context, IConfiguration configuration)

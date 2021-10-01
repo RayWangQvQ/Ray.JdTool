@@ -3,6 +3,47 @@
 @using Ray.JdTool.JdCkHistories
 @inherits JdToolComponentBase
 
+
+<Steps SelectedStep="@selectedStep" SelectedStepChanged="@OnSelectedStepChanged">
+    <Items>
+        <Step Name="step1">Step 1</Step>
+        <Step Name="step2">Step 2</Step>
+        <Step Name="step3">Step 3</Step>
+        <Step Name="step4">
+            <Marker>
+                <Icon Name="IconName.Flag" />
+            </Marker>
+            <Caption>
+                Finish
+            </Caption>
+        </Step>
+    </Items>
+    <Content>
+        <StepPanel Name="step1">
+            <Heading Size="HeadingSize.Is4">登录系统：</Heading>
+            <Text>
+                点击右上角登录按钮，登录账号。如果还未注册账号，请在登录页面点击注册进行注册（推荐可以直接使用GitHub授权登录）
+            </Text>
+        </StepPanel>
+        <StepPanel Name="step2">
+            <Heading Size="HeadingSize.Is4">获取东京Cookie：</Heading>
+            <Text>
+                点击下方“如何获取我的Cookie”，根据教程获取自己的东京Cookie字符串
+            </Text>
+        </StepPanel>
+        <StepPanel Name="step3">
+            <Heading Size="HeadingSize.Is4">提交：</Heading>
+            <Text>
+                将字符串填入下方输入框中（完成全量的字符串或经过精简后的都可以），点击提交，提示提交成功即完成
+            </Text>
+        </StepPanel>
+        <StepPanel Name="step4">
+            <Heading Size="HeadingSize.Is4">完成</Heading>
+        </StepPanel>
+    </Content>
+</Steps>
+
+
 <Text TextColor="TextColor.Secondary">
     请输入你的JDCookie：
 </Text>
@@ -10,7 +51,7 @@
     （如何获取我的Cookie？）
 </Blazorise.Link>
 
-<MemoEdit Rows="5" @bind-Text="@cookieStr" Placeholder="如：pt_pin=xxxx;pt_key=xxxxxxxxxx; 完整Cookie字符串或只有pt_pin和pt_key的都可以" />
+<MemoEdit Rows="5" @bind-Text="@cookieStr" Placeholder="如：pt_pin=xxxx;pt_key=xxxxxxxxxx;" />
 
 <Button Color="Color.Primary" Clicked="@OnButtonClickedAsync">提交</Button>
 
@@ -45,6 +86,15 @@
     string cookieStr = "";
     CommitResult commitResult = new CommitResult();
     bool isAlertVisible = false;
+
+    string selectedStep = "step1";
+
+    private Task OnSelectedStepChanged(string name)
+    {
+        selectedStep = name;
+
+        return Task.CompletedTask;
+    }
 
     private async Task OnButtonClickedAsync()
     {
