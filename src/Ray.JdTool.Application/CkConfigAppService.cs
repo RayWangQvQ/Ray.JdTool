@@ -55,7 +55,7 @@ namespace Ray.JdTool
                 {
                     Success = true,
                     CommitResultType = CommitResultType.Update,
-                    ResultStr = $"{pre}=\"{jdCk.SimpleStr}\""
+                    ResultStr = $"{pre}=\"{jdCk.FullStr}\""
                 };
 
                 _configStr = _configStr.Replace(match.Value, result.ResultStr);
@@ -80,7 +80,7 @@ namespace Ray.JdTool
                 {
                     Success = true,
                     CommitResultType = CommitResultType.Add,
-                    ResultStr = $"Cookie{newNum}=\"{jdCk.SimpleStr}\""
+                    ResultStr = $"Cookie{newNum}=\"{jdCk.FullStr}\""
                 };
                 _configStr = _configStr.Replace(lastLine, lastLine + Environment.NewLine + result.ResultStr);
             }
