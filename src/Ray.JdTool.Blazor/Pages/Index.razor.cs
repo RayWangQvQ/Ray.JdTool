@@ -12,11 +12,11 @@ namespace Ray.JdTool.Blazor.Pages
 
         string LogoUrl { get; set; }
 
-        protected override Task OnInitializedAsync()
+        protected async override Task OnInitializedAsync()
         {
             LogoUrl = Path.Combine(Configuration["RemoteServices:Default:BaseUrl"], "logo.jpg");
 
-            return base.OnInitializedAsync();
+            await base.OnInitializedAsync();
         }
     }
 }
