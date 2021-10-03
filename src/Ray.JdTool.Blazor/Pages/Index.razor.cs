@@ -14,7 +14,7 @@ namespace Ray.JdTool.Blazor.Pages
 
         protected async override Task OnInitializedAsync()
         {
-            LogoUrl = Path.Combine(Configuration["RemoteServices:Default:BaseUrl"], "logo.jpg");
+            LogoUrl = Path.Combine(Configuration["RemoteServices:Default:BaseUrl"], "logo.png");
 
             await base.OnInitializedAsync();
         }
