@@ -24,11 +24,13 @@ namespace Ray.JdTool
 #if DEBUG
                 .WriteTo.Async(c => c.Console())
 #endif
+                .WriteTo.Async(c => c.Seq(Environment.GetEnvironmentVariable("SeqServerUrl")))
                 .CreateLogger();
 
             try
             {
                 Log.Information("Starting Ray.JdTool.HttpApi.Host.");
+                Log.Information("Seq server url is:{url}", Environment.GetEnvironmentVariable("SeqServerUrl"));
                 CreateHostBuilder(args).Build().Run();
                 return 0;
             }
