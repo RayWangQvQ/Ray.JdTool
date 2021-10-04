@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Ray.JdTool.Identity;
 using Ray.JdTool.JdCkHistories;
 
 namespace Ray.JdTool
@@ -13,6 +15,8 @@ namespace Ray.JdTool
 
             CreateMap<JdCkHistory, JdCkHistoryDto>();
             CreateMap<CreateUpdateJdCkHistoryDto, JdCkHistory>();
+
+            CreateMap<IdentityUser, IdentityUserEto>();
         }
     }
 }

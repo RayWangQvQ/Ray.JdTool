@@ -35,5 +35,10 @@ namespace Ray.JdTool.JdCkHistories
                 .Match(FullStr);
             return match.Success ? match.Value : "";
         }
+
+        protected override void AddDistributedEvent(object eventData)
+        {
+            base.AddDistributedEvent(eventData);
+        }
     }
 }
