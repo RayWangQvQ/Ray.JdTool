@@ -11,7 +11,8 @@ namespace Ray.JdTool
     {
         public static int Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
+            var seqServer = Environment.GetEnvironmentVariable("SeqServerUrl");
+            var loggerConfiguration = new LoggerConfiguration()
 #if DEBUG
                 .MinimumLevel.Debug()
 #else
@@ -20,12 +21,15 @@ namespace Ray.JdTool
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
                 .Enrich.FromLogContext()
-                .WriteTo.Async(c => c.File("Logs/logs.txt", rollingInterval: RollingInterval.Day))
 #if DEBUG
                 .WriteTo.Async(c => c.Console())
 #endif
-                .WriteTo.Async(c => c.Seq(Environment.GetEnvironmentVariable("SeqServerUrl")))
-                .CreateLogger();
+                .WriteTo.Async(c => c.File("Logs/logs.txt", rollingInterval: RollingInterval.Day));
+            if (!seqServer.IsNullOrWhiteSpace())
+            {
+                loggerConfiguration.WriteTo.Async(c => c.Seq(seqServer));
+            }
+            Log.Logger = loggerConfiguration.CreateLogger();
 
             try
             {

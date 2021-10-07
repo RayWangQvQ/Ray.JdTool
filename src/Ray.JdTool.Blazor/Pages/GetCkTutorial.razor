@@ -1,0 +1,23 @@
+﻿@page "/tutorial"
+
+@using Ray.JdTool.JdCkTutorials
+
+@inherits JdToolComponentBase
+
+<Text>
+    @((MarkupString)markdownHtml)
+</Text>
+
+@code {
+    [Inject]
+    IJdCkTutorialsAppService JdCkTutorialsAppService { get; set; }
+
+    string markdownHtml;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var re = await JdCkTutorialsAppService.GetAsync();
+        markdownHtml = Markdig.Markdown.ToHtml(re.MarkdownStr ?? string.Empty);
+        await base.OnInitializedAsync();
+    }
+}

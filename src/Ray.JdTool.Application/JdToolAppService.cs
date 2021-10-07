@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Hosting;
 using Ray.JdTool.Localization;
 using Volo.Abp.Application.Services;
 

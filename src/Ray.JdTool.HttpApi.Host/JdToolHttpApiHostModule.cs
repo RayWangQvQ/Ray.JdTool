@@ -29,6 +29,8 @@ using Volo.Abp.Swashbuckle;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
 using Volo.Abp.EventBus.RabbitMq;
+using Microsoft.AspNetCore.Hosting;
+using Ray.JdTool.Data;
 
 namespace Ray.JdTool
 {
@@ -43,7 +45,8 @@ namespace Ray.JdTool
         typeof(AbpAccountWebIdentityServerModule),
         typeof(AbpAspNetCoreSerilogModule),
         typeof(AbpSwashbuckleModule),
-        typeof(AbpEventBusRabbitMqModule)
+        typeof(AbpEventBusRabbitMqModule),
+        typeof(AbpVirtualFileSystemModule)
     )]
     public class JdToolHttpApiHostModule : AbpModule
     {
@@ -233,8 +236,14 @@ namespace Ray.JdTool
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
         {
-            var app = context.GetApplicationBuilder();
-            var env = context.GetEnvironment();
+            IApplicationBuilder app = context.GetApplicationBuilder();
+            IWebHostEnvironment env = context.GetEnvironment();
+
+            //迁移数据库
+            app.ApplicationServices
+                .GetRequiredService<JdToolDbMigrationService>()
+                .MigrateAsync()
+                .Wait();
 
             if (env.IsDevelopment())
             {
