@@ -289,6 +289,9 @@ namespace Ray.JdTool
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();
+
+            //注册Consule
+            context.GetConfiguration().ConsulRegistry();
         }
     }
 }
